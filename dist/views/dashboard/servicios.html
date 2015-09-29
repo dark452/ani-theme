@@ -1,0 +1,69 @@
+<div ng-controller="services"> 
+<a ui-sref=reports class="pull-right btn btn-primary btn-outline btn-rounded">Reports</a> 
+
+<h2>Servicios <small>Why is Ani Theme so awesome?</small></h2> 
+
+<div class=jumbotron> 
+	<div class=container> <h1>Welcome!</h1> 
+	<div class="col-md-3">Filtro:
+            <input type="text" ng-model="search" ng-change="filter()" placeholder="Filtro" class="form-control"/>
+            <br>
+        </div>
+        <div class="row">
+        <div class="col-md-4">
+            <h5>Filtrado {{ filtered.length }} de {{ totalItems}} total </h5>
+        </div>
+	<div class="col-md-12"> 
+		 
+	<div class="panel panel-danger"> 
+		<span us-spinner="{radius:30, width:8, length: 16}"></span>
+ 		<div class="panel-heading"> 
+			<h3 class="panel-title">Servicios 
+			<div class="panel-control pull-right"> 
+				<a class="panelButton"><i class="fa fa-refresh"></i></a> 
+				<a class="panelButton"><i class="fa fa-minus"></i></a> 
+				<a class="panelButton"><i class="fa fa-remove"></i></a> 
+			</div> </h3>
+		</div> 
+		<div class="panel-body"> 
+			<table class="table table-condensed"> 
+				<thead> <tr> 
+				<th>id</th> 
+				<th>Nombre</th> 
+				<th>precio clp</th> 
+				<th>Fecha Creación</th> 
+				<th>Descripción</th> 
+				<th>precio usd</th> 
+				<th>logo</th> 
+				<th>Editar</th>
+				</tr> </thead> 
+
+				 <tbody>
+                <tr ng-repeat="data in filtered = (list | filter:search | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+               
+                <td>{{data.id_product}}</td>   
+                <td>{{data.product_name}}</td>   
+                <td>{{data.product_price_clp}}</td>   
+                <td>{{data.date_creation}}</td>   
+                <td>{{data.description_product}}</td>   
+                <td>{{data.product_price_usd}}</td>   
+                <td><img src="images/{{data.logo}}"></td>
+                <td><button>Editar</button>
+                 </tr>     
+                </tbody>
+             </table>
+        </div>	
+	</div> 
+	 <div ng-controller="wysiwygeditor" class="container app">
+        <h1>Editor</h1>
+        
+        <div class="container lighter">
+            <div text-angular ng-model="htmlContentxx" name="demo-editor" ta-text-editor-class="border-around container" ta-html-editor-class="border-around"></div>
+        </div>
+                
+    </div>
+	</div> 
+
+
+
+</div>
