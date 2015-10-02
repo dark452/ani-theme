@@ -48,7 +48,7 @@
                 <td>{{data.description_product}}</td>   
                 <td>{{data.product_price_usd}}</td>   
                 <td><img src="images/{{data.logo}}"></td>   
-                <td><button class="pull-right btn btn-primary btn-outline btn-rounded" ng-click="edit_product(data.id_product)">Editar</button>
+                <td><button class="pull-right btn btn-primary btn-outline btn-rounded" ng-click="edit_product(data)">Editar</button>
                  </tr>     
                 </tbody>
              </table>
@@ -75,14 +75,12 @@
             			<div class="form-group"> 
             				<label for="product_name" class="col-sm-2 control-label">Nombre</label> 
             			<div class="col-sm-4"> 
-            			<input type="text" class="form-control" id="product_name" placeholder="Nombre"> 
-
+            			<input type="text" class="form-control" id="product_name" placeholder="Nombre" value={{data.product_name}}> 
             			</div>
 <label for="fecha_creacion" class="col-sm-2 control-label">Fecha Creación</label> <div class="col-sm-4"> 
-            				<input type="text" disabled class="form-control" id="fecha_creacion" placeholder="Fecha creación"> 
+            				<input type="input" disabled class="form-control" id="fecha_creacion" placeholder="Fecha creación" value={{data.date_creation}}> 
 
-            			</div></div> 
-            			
+            			</div></div>             			
             			<div class="form-group"> 
             				<label for="product_descripcion" class="col-sm-2 control-label">Descripción</label> <div class="col-sm-10"> 
             				<textarea class="form-control" id="product_descripcion" placeholder="Descripción" rows="3">{{data.description_product}}</textarea>
@@ -90,13 +88,13 @@
             			<div class="form-group"> 
             				<label for="product_clp" class="col-sm-2 control-label">Precio CLP</label> 
             				<div class="col-sm-4"> 
-            				<input type="number" class="form-control" id="product_clp" placeholder="Precio CLP">{{data.product_price_clp}}</div>         			
+            				<input type="number" class="form-control" id="product_clp" placeholder="Precio CLP" value={{data.product_price_clp}}></div>         			
             				<label for="product_usd" class="col-sm-2 control-label">Precio USD</label> <div class="col-sm-4"> 
-            				<input type="number" class="form-control" id="product_usd" placeholder="Precio USD"> 
+            				<input type="number" class="form-control" id="product_usd" placeholder="Precio USD" value={{data.product_price_usd}}>
             			</div> </div>
             			<div class="form-group"> 
             				<label for="logo" class="col-sm-2 control-label">Logo</label> <div class="col-sm-10"> 
-            				<img src="images/">
+            				<img src="images/{{data.logo}}">
             			</div> </div>
             			
 
