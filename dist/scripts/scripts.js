@@ -82,15 +82,14 @@ angular.module(['redeshost']).controller('products',
         $scope.reverse = !$scope.reverse;
     };
 
-    $scope.edit_product=function(id) {    	
+    $scope.edit_product=function(data) {    	
       var modalInstance = $modal.open({
       animation: $scope.animationsEnabled,
       templateUrl: 'producto_detalles.html',
-      controller: 'ModalInstanceCtrl',
-      size: id,
+      controller: 'ModalInstanceCtrl',     
       resolve: {
-        items: function () {
-          return $scope.id;
+        item: function () {
+          return data;
         }
       }
     
@@ -98,8 +97,8 @@ angular.module(['redeshost']).controller('products',
 
   }),
 
-	angular.module('redeshost').controller('ModalInstanceCtrl', function ($scope, $modalInstance, items) {
-		
+	angular.module('redeshost').controller('ModalInstanceCtrl', function ($scope, $modalInstance, item) {
+		$scope.data=item;
   $scope.ok = function () {
     $modalInstance.close($scope.selected);
     alert("Me cerre");
