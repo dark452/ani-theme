@@ -1,10 +1,10 @@
 <div ng-controller="products"> 
-<a ui-sref=reports class="pull-right btn btn-primary btn-outline btn-rounded">Reports</a> 
+<button class="pull-right btn btn-primary btn-outline btn-rounded" ng-click="new_product()">Agregar</button>
 
-<h2>Productos <small>Why is Ani Theme so awesome?</small></h2> 
+<h2>Productos</h2> 
 
 <div class=jumbotron> 
-	<div class=container> <h1>Welcome!</h1> 
+	<div class=container> <h1>Buscar</h1> 
 	<div class="col-md-3">Filtro:
             <input type="text" ng-model="search" ng-change="filter()" placeholder="Filtro" class="form-control"/>
             <br>
@@ -41,10 +41,10 @@
 				 <tbody>
                 <tr ng-repeat="data in filtered = (list | filter:search | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
                
-                <td>{{data.id_product}}</td>   
+                <td>{{data.id}}</td>   
                 <td>{{data.product_name}}</td>   
                 <td>{{data.product_price_clp}}</td>   
-                <td>{{data.date_creation}}</td>   
+                <td>{{data.date_creation | date:'short'}}</td>   
                 <td>{{data.description_product}}</td>   
                 <td>{{data.product_price_usd}}</td>   
                 <td><img src="images/{{data.logo}}"></td>   
@@ -56,6 +56,7 @@
 	</div> 
 	<div>
     <script type="text/ng-template" id="producto_detalles.html">
+    <form name = "editProductForm">
         <div class="modal-header">
             <h3 class="modal-title">Edición Producto</h3>
         </div>
@@ -75,22 +76,26 @@
             			<div class="form-group"> 
             				<label for="product_name" class="col-sm-2 control-label">Nombre</label> 
             			<div class="col-sm-4"> 
-            			<input type="text" class="form-control" id="product_name" placeholder="Nombre" value={{data.product_name}}> 
+            			<input ng-model="data.product_name" type="text" class="form-control" title="Nombre"  placeholder="Nombre"/>
             			</div>
-<label for="fecha_creacion" class="col-sm-2 control-label">Fecha Creación</label> <div class="col-sm-4"> 
-            				<input type="input" disabled class="form-control" id="fecha_creacion" placeholder="Fecha creación" value={{data.date_creation}}> 
-
-            			</div></div>             			
+<label for="fecha_creacion" class="col-sm-2 control-label">Fecha Creación</label> 
+<div class="col-sm-4"> 
+            				<input ng-model="data.date_creation | date:'short'" type="input" disabled class="form-control" placeholder="Fecha creación" /> 
+            			</div></div>   
+                                  			
             			<div class="form-group"> 
-            				<label for="product_descripcion" class="col-sm-2 control-label">Descripción</label> <div class="col-sm-10"> 
-            				<textarea class="form-control" id="product_descripcion" placeholder="Descripción" rows="3">{{data.description_product}}</textarea>
-            			</div> </div>
+            				<label for="data.description_product" class="col-sm-2 control-label">Descripción</label> 
+                            <div class="col-sm-10"> 
+            				<textarea ng-model="data.description_product" class="form-control" placeholder="Descripción" rows="3"></textarea>
+            			     </div></div>
             			<div class="form-group"> 
             				<label for="product_clp" class="col-sm-2 control-label">Precio CLP</label> 
             				<div class="col-sm-4"> 
-            				<input type="number" class="form-control" id="product_clp" placeholder="Precio CLP" value={{data.product_price_clp}}></div>         			
-            				<label for="product_usd" class="col-sm-2 control-label">Precio USD</label> <div class="col-sm-4"> 
-            				<input type="number" class="form-control" id="product_usd" placeholder="Precio USD" value={{data.product_price_usd}}>
+            				<input ng-model="data.product_price_clp" type="text" class="form-control" placeholder="Precio CLP"/>
+                            </div>         			
+            				<label for="product_usd" class="col-sm-2 control-label">Precio USD</label> 
+                            <div class="col-sm-4"> 
+            				<input ng-model="data.product_price_usd" type="text" class="form-control" id="product_usd" placeholder="Precio USD" />
             			</div> </div>
             			<div class="form-group"> 
             				<label for="logo" class="col-sm-2 control-label">Logo</label> <div class="col-sm-10"> 
@@ -113,7 +118,96 @@
             <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
             <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
         </div>
+        </form>
     </script>
+
+
+    <script type="text/ng-template" id="agregar_producto.html">
+    <form name = "insertProductForm">
+        <div class="modal-header">
+            <h3 class="modal-title">Agregar Producto</h3>
+        </div>
+        <div class="modal-body">
+            <div class="panel panel-danger"> 
+            <div class="panel-heading">
+                <h3 class="panel-title">Producto Detalles
+                    <div class="panel-control pull-right"> 
+                    <a class="panelButton"><i class="fa fa-refresh"></i></a> 
+                    <a class="panelButton"><i class="fa fa-minus"></i></a> 
+                    <a class="panelButton"><i class="fa fa-remove"></i></a> 
+                    </div>                  
+                </h3> 
+                </div>
+                <div class="panel-body"> 
+                    <form class="form-horizontal ng-pristine ng-valid"> 
+                        <div class="form-group"> 
+                            <label for="product_name" class="col-sm-2 control-label">Nombre</label> 
+                        <div class="col-sm-10"> 
+                        <input ng-model="data.product_name" type="text" class="form-control" title="Nombre"  placeholder="Nombre"/>
+                        </div>
+                                                                    
+                       
+                            <label for="data.description_product" class="col-sm-2 control-label">Descripción</label> 
+                            <div class="col-sm-10"> 
+                            <textarea ng-model="data.description_product" class="form-control" placeholder="Descripción" rows="3"></textarea>
+                             </div>
+                    
+                            <label for="product_clp" class="col-sm-2 control-label">Precio CLP</label> 
+                            <div class="col-sm-4"> 
+                            <input ng-model="data.product_price_clp" type="number" class="form-control" placeholder="Precio CLP"/>
+                            </div>                  
+                            <label for="product_usd" class="col-sm-2 control-label">Precio USD</label> 
+                            <div class="col-sm-4"> 
+                            <input ng-model="data.product_price_usd" type="number" class="form-control" id="product_usd" placeholder="Precio USD" />
+                        </div> 
+                        
+                            <label for="logo" class="col-sm-2 control-label">Logo</label> <div class="col-sm-10"> 
+                            <file-field ng-model="data.logo" preview="previewImage">Select File</file-field>
+                        <img ng-src="{{previewImage}}" width="100px" height="100px">
+                            <!--<input ng-model="data.logo" type="file" class="form-control" placeholder="Logo"/><img src="images/{{data.logo}}">-->
+                        </div> 
+                        
+                            <label for="product_campo1" class="col-sm-2 control-label">HDD</label> 
+                            <div class="col-sm-4"> 
+                            <input ng-model="data.campo1" type="number" class="form-control" placeholder="Espacio HDD"/>
+                            </div>                  
+                            <label for="product_campo2" class="col-sm-2 control-label">Tráfico</label> 
+                            <div class="col-sm-4"> 
+                            <input ng-model="data.campo2" type="text" class="form-control"  placeholder="Tráfico" />
+                        </div>                        
+                            <label for="product_campo3" class="col-sm-2 control-label">Nro BD</label> 
+                            <div class="col-sm-4"> 
+                            <input ng-model="data.campo3" type="number" class="form-control" placeholder="Nro BD"/>
+                            </div>                  
+                            <label for="product_campo4" class="col-sm-2 control-label">Correos</label> 
+                            <div class="col-sm-4"> 
+                            <input ng-model="data.campo4" type="text" class="form-control"  placeholder="Cuentas Correos" />
+                            </div>
+                            <label for="product_campo5" class="col-sm-2 control-label">Dominios</label> 
+                            <div class="col-sm-4"> 
+                            <input ng-model="data.campo5" type="number" class="form-control" placeholder="Dominios Adicionales"/>
+                            </div>
+                            <label for="product_campo6" class="col-sm-2 control-label">Panel</label> 
+                            <div class="col-sm-4"> 
+                            <input ng-model="data.campo6" type="text" class="form-control"  placeholder="Panel Control"/>
+                            </div> 
+                            <label for="product_campo7" class="col-sm-2 control-label">Velocidad</label> 
+                            <div class="col-sm-4"> 
+                            <input ng-model="data.campo7" type="text" class="form-control" placeholder="Velocidad"/>
+                            </div>
+                        </div> 
+                    </form> 
+                </div>
+            </div>            
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+        </form>
+    </script>
+
+
 	 <div ng-controller="wysiwygeditor" class="container app">
         <h1>Editor</h1>
         
